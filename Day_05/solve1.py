@@ -46,6 +46,20 @@ def buildInitialStack(stackdata):
     
     return stacks
 
+def move(stacks, i_from, i_to, i_howmany):
+    '''Move i_howmany creates from i_from to i_to'''
+    for i in range(i_howmany):
+        # pop last element
+        crate = stacks[i_from-1].pop(-1)
+        stacks[i_to-1].append(crate)
+    return stacks
+
+def topOfStacks(stacks):
+    '''Build a string showing the top of all stacks'''
+    result = ''
+    for s in stacks:
+        result = result + s[-1]
+    return result
 
 if __name__ == "__main__":
     # read the lines of the file
@@ -60,13 +74,6 @@ if __name__ == "__main__":
             if data["type"] == "separator":
                 stacks = buildInitialStack(stackdata)
             if data["type"] == "move":
-                for i in range(data["howmany"]):
-                    # pop last element
-                    crate = stacks[data["from"]-1].pop(-1)
-                    stacks[data["to"]-1].append(crate)
+                stacks = move(stacks, data["from"], data["to"], data["howmany"])
 
-        # build result
-        result = ''
-        for s in stacks:
-            result = result + s[-1]
-        print("The top elements of the stack are %s" % result)
+        print("The top elements of the stack are %s" % topOfStacks(stacks))
