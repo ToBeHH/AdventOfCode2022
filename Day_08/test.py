@@ -29,5 +29,12 @@ class TesVisibility(unittest.TestCase):
     def test_count(self):
         self.assertEqual(count_visible_trees(self.forest), 21)
 
+    def test_scenic_score(self):
+        self.assertEqual(scenic_score(self.forest, 2, 1), 4)
+        self.assertEqual(scenic_score(self.forest, 2, 3), 8)
+
+    def test_max(self):
+        self.assertEqual(highest_scenic_score(self.forest), 8)
+
 if __name__ == '__main__':
     unittest.main()
