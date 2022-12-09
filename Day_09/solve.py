@@ -8,7 +8,7 @@ FILENAME = 'input.txt'
 if __name__ == "__main__":
     # read the lines of the file
     with open(FILENAME) as f:
-        rope = Rope()
+        rope = Rope(rope_length=10)
         for line in f:
             rope.move_head(line)
             
