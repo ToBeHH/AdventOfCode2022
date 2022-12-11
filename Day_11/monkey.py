@@ -11,6 +11,7 @@ class Monkey(object):
         self.next_monkey_true = int(lines[4].split(" ")[-1])
         self.next_monkey_false = int(lines[5].split(" ")[-1])
         self.inspections = 0
+        self.worryMod = 0
 
     def perform_operation(self, value):
         loc = {}
@@ -20,7 +21,10 @@ class Monkey(object):
     def catch_item(self, item):
         self.items.append(item)
 
-    def perform_operations(self, monkeys, debug = False):
+    def print_items(self):
+        print("%s: %s" % (self.name, ", ".join([str(item) for item in self.items])))
+
+    def perform_operations(self, monkeys, lowWorry = True, debug = False):
         if debug:
             print("%s:" % self.name)
         while len(self.items) > 0:
@@ -30,7 +34,10 @@ class Monkey(object):
             worry_level = self.perform_operation(item)
             if debug:
                 print("    Worry level after operation: %d" % worry_level)
-            worry_level = int(worry_level / 3)
+            if lowWorry:
+                worry_level = int(worry_level / 3)
+            if self.worryMod:
+                worry_level %= self.worryMod
             if debug:
                 print("    Monkey gets bored with item. Worry level is divided by 3 to %d.", worry_level)
             test = worry_level % self.next_monkey_test == 0
