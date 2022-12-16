@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+from functools import cmp_to_key
 from itertools import zip_longest
 
 FILENAME = 'input.txt'
@@ -40,21 +41,21 @@ def compare_arrays(array1, array2):
 if __name__ == "__main__":
     # read the lines of the file
     with open(FILENAME) as f:
-        array1 = []
-        array2 = []
+        packets = []
         line_index = 0
         sum = 0
         pair_index = 1
         for line in f:
             if line_index == 0:
-                array1 = eval(line.strip())
+                packets.append(eval(line.strip()))
             if line_index == 1:
                 loc = {}
-                array2 = eval(line.strip())
-                if compare(array1, array2) == -1:
-                    sum += pair_index
+                packets.append(eval(line.strip()))
             if line_index == 2:
                 line_index = -1
                 pair_index += 1
             line_index += 1
-        print(sum)
+
+        div1, div2 = [[2]], [[6]]
+        sorted_packets = sorted([*packets, div1, div2], key=cmp_to_key(compare))
+        print((sorted_packets.index(div1) + 1) * (sorted_packets.index(div2) + 1))
